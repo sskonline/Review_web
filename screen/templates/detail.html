@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{movies.title}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F6F2;
+    --surface: #FFFFFF;
+    --ink: #1A1A18;
+    --muted: #6B6B65;
+    --accent: #2D5BE3;
+    --accent-light: #EEF2FD;
+    --border: #E4E3DD;
+    --radius: 12px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Sticky nav ── */
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 56px;
+    background: rgba(247,246,242,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    gap: 8px;
+  }
+
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-back:hover { background: var(--border); color: var(--ink); }
+
+  .nav-sep { color: var(--border); font-size: 18px; user-select: none; }
+
+  .nav-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ── Page ── */
+  .detail-page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    animation: slideIn 0.22s ease both;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(18px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .detail-page { animation: none; }
+  }
+
+  /* ── Hero image ── */
+  .detail-hero {
+    width: 100%;
+    height: 260px;
+    border-radius: var(--radius);
+    object-fit: cover;
+    display: block;
+    border: 1px solid var(--border);
+    margin-bottom: 28px;
+    background: var(--accent-light);
+  }
+
+  /* ── Tag ── */
+  .detail-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  /* ── Title ── */
+  .detail-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .detail-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .detail-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 24px;
+  }
+
+  /* ── Body ── */
+  .detail-body {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+
+  .detail-body strong { color: var(--ink); font-weight: 600; }
+
+  /* ── Links ── */
+  .links-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .link-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .link-row:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+  }
+
+  .link-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .link-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--accent-light);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+
+  .link-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .link-desc {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+
+  .link-arrow {
+    font-size: 16px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- Breadcrumb nav — change href to your list page -->
+<nav class="topnav">
+  <a href="{% url "screen:index"%}">← Back</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-title">{{movies.title}}</span>
+</nav>
+
+<main class="detail-page">
+
+  <!-- Hero image — replace src with your image path -->
+  <img src="{{movies.img_src}}" style="height:400px; width:400px" alt="Hero image" class="detail-hero">
+
+  <!-- Tag / category -->
+  <span class="detail-tag">{{movies.year}}</span>
+
+  <!-- Title -->
+  <h1 class="detail-title">{{movies.title}}</h1>
+
+  <div class="detail-divider"></div>
+
+  <!-- Description -->
+  <div class="detail-body">
+    
+  </div>
+
+  <!-- Links section -->
+  <p class="links-label">Movies released at {{movies.year}}</p>
+
+  {% for movie in rel_movies %}
+  <a href="{% url "screen:detail" slug=movie.slug %}" class="link-row" target="_blank">
+    <div class="link-left">
+      <div class="link-icon">
+        <img style="height:30px ; width:100px;" src="{{movie.img_src}}" alt="Movie Poster">
+      </div>
+      <div>
+        <div class="link-name">{{movie.title}}</div>
+      </div>
+    </div>
+    <span class="link-arrow">↗</span>
+  </a>
+  {% endfor %}
+
+</main>
+
+</body>
+</html>
