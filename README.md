@@ -14,8 +14,6 @@ A full-stack Movie Review Web Application built using Django and Django REST Fra
 * Admin Panel for content management
 * Clean and scalable project structure
 
-## Tech Stack
-
 ### Backend
 
 * Python
